@@ -192,12 +192,20 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.2.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+
 
     </dependencies>
 
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>com.liferay.maven.plugins</groupId>
                 <artifactId>liferay-maven-plugin</artifactId>

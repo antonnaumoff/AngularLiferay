@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="portal-web exploded">
+    <output-path>$USER_HOME$/App/liferay/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="AngularLiferay/web/Web" />
+    </root>
+  </artifact>
+</component>

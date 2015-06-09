@@ -4,7 +4,10 @@ package com.antonnaumoff.web;
 import com.antonnaumoff.utils.exceptions.DataBaseException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -18,8 +21,12 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static com.liferay.portal.util.PortalUtil.getPortletId;
 
 @Controller
 @RequestMapping(value = "VIEW")
@@ -38,7 +45,7 @@ public class InitController {
         model.addAttribute("ajaxURL", baseResourceUrl.toString());
 //        model.addAttribute("standalone", false);
 //        model.addAttribute("authenticatedUser", userScreenName);
-//        model.addAttribute("portletId", getPortletId(request));
+        model.addAttribute("portletId", getPortletId(request));
 //        model.addAttribute("portletAppContextPath", request.getContextPath() + "/");
         return "initPage";
     }
@@ -46,24 +53,40 @@ public class InitController {
 
     @ResourceMapping("getAllUsersAndRoles")
     public void getAllUsersAndRoles(ResourceResponse response) throws SystemException, IOException {
-        Map result = new HashMap();
-//        UserLocalServiceUtil.getUsers(0, UserLocalServiceUtil.getUsersCount())
+
+        List result = new ArrayList();
+        for (User user : UserLocalServiceUtil.getUsers(0, UserLocalServiceUtil.getUsersCount())) {
+            Map one = new HashMap();
+            one.put("firstName", user.getFirstName());
+            one.put("secondName", user.getLastName());
+            one.put("fullName", user.getFullName());
+            one.put("id", user.getUserId());
+            result.add(one);
+        }
+
 //        RoleLocalServiceUtil.getRoles(0, RoleLocalServiceUtil.getRolesCount())
-        result.put("users", "ListOfUsers");
-        result.put("roles", "ListOfRoles");
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        JSON_MAPPER.writeValue(response.getPortletOutputStream(), result);
-
-    }
-
-//    @ResourceMapping("getAllUsersAndRoles")
-//    @ResponseBody
-//    public Map getAllUsersAndRoles(ResourceResponse response) throws SystemException, IOException {
-//        Map result = new HashMap();
-//        result.put("users", "ListOfUsers");
+//        result.put("users", " ");
+//        result.put("roles", "ListOfRoles");
 //        response.setContentType("application/json");
 //        response.setCharacterEncoding("UTF-8");
-//        return result;
-//    }
+//
+//        Gson gson = new Gson();
+//        String  = gson.toJson();
+
+        JSON_MAPPER.writeValue(response.getPortletOutputStream(), result);
+    }
+
+
+    @ResourceMapping("getAllRolesById}")
+    public void getAllRoles(ResourceResponse response) throws SystemException, IOException {
+//TODO pass id by post body!!!
+        List result = new ArrayList();
+        for (Role role : RoleLocalServiceUtil.getUserRoles(10248)) {
+            Map temp = new HashMap();
+            temp.put("title", role.getTitle());
+            temp.put("id", role.getUserId());
+            result.add(temp);
+        }
+        JSON_MAPPER.writeValue(response.getPortletOutputStream(), result);
+    }
 }

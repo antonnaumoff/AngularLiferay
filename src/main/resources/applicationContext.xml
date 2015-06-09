@@ -13,18 +13,6 @@
 
     <context:annotation-config/>
 
-    <!--<context:component-scan-->
-            <!--base-package="com.antonnaumoff.utils.validators">-->
-    <!--</context:component-scan>-->
-
-    <!--<context:component-scan-->
-            <!--base-package="com.antonnaumoff.repository">-->
-    <!--</context:component-scan>-->
-
-    <!--<context:component-scan-->
-            <!--base-package="com.antonnaumoff.service">-->
-    <!--</context:component-scan>-->
-
     <aop:aspectj-autoproxy/>
 
     <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -39,8 +27,6 @@
         <property name="dataSource" ref="myDataSource"/>
         <property name="annotatedClasses">
             <list>
-                <!--<value>com.antonnaumoff.models.Department</value>-->
-                <!--<value>com.antonnaumoff.models.Employee</value>-->
             </list>
         </property>
         <property name="hibernateProperties">
