@@ -51,6 +51,7 @@ public class InitController {
             one.put("firstName", user.getFirstName());
             one.put("secondName", user.getLastName());
             one.put("fullName", user.getFullName());
+            one.put("screenName", user.getScreenName());
             one.put("id", user.getUserId());
             result.add(one);
         }
@@ -66,6 +67,7 @@ public class InitController {
             Map temp = new HashMap();
             temp.put("title", role.getName());
             temp.put("id", role.getUserId());
+            temp.put("description", role.getDescriptionCurrentValue());
             result.add(temp);
         }
         logger.info("Roles number: " + result.size());
