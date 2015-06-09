@@ -1,9 +1,7 @@
 package com.antonnaumoff.web;
 
-
 import com.antonnaumoff.utils.exceptions.DataBaseException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -16,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceResponse;
-import javax.portlet.ResourceURL;
+import javax.portlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,14 +34,10 @@ public class InitController {
     @RenderMapping
     public String initLoginPage(RenderRequest request, RenderResponse response, ModelMap model) throws DataBaseException, SystemException {
         logger.info("Main page initialization");
-        User user = (User) request.getAttribute(WebKeys.USER);
-        String userScreenName = user != null ? user.getScreenName() : "anonymous";
         ResourceURL baseResourceUrl = response.createResourceURL();
         model.addAttribute("ajaxURL", baseResourceUrl.toString());
-//        model.addAttribute("standalone", false);
-//        model.addAttribute("authenticatedUser", userScreenName);
         model.addAttribute("portletId", getPortletId(request));
-//        model.addAttribute("portletAppContextPath", request.getContextPath() + "/");
+
         return "initPage";
     }
 
@@ -63,30 +54,21 @@ public class InitController {
             one.put("id", user.getUserId());
             result.add(one);
         }
-
-//        RoleLocalServiceUtil.getRoles(0, RoleLocalServiceUtil.getRolesCount())
-//        result.put("users", " ");
-//        result.put("roles", "ListOfRoles");
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("UTF-8");
-//
-//        Gson gson = new Gson();
-//        String  = gson.toJson();
-
+        logger.info("Users number: " + result.size());
         JSON_MAPPER.writeValue(response.getPortletOutputStream(), result);
     }
 
+    @ResourceMapping("resourseURL")
+    public void getAllRoles(ResourceRequest resourceRequest, PortletRequest portletRequest, ResourceResponse response) throws SystemException, IOException {
 
-    @ResourceMapping("getAllRolesById}")
-    public void getAllRoles(ResourceResponse response) throws SystemException, IOException {
-//TODO pass id by post body!!!
         List result = new ArrayList();
-        for (Role role : RoleLocalServiceUtil.getUserRoles(10248)) {
+        for (Role role : RoleLocalServiceUtil.getUserRoles(Integer.parseInt(resourceRequest.getParameter("id")))) {
             Map temp = new HashMap();
-            temp.put("title", role.getTitle());
+            temp.put("title", role.getName());
             temp.put("id", role.getUserId());
             result.add(temp);
         }
+        logger.info("Roles number: " + result.size());
         JSON_MAPPER.writeValue(response.getPortletOutputStream(), result);
     }
 }

@@ -31,9 +31,9 @@
                                 <td class="my-table-cell3"></td>
                                 <td class="my-table-cell3">
                                     <%--<div ng-show="permission.edit=='true'">--%>
-                                        <%--<button ng-click="createDepartment()" class="btn btn-default btn-lg">--%>
-                                            <%--<span class="icon icon-plus"></span>--%>
-                                        <%--</button>--%>
+                                    <%--<button ng-click="createDepartment()" class="btn btn-default btn-lg">--%>
+                                    <%--<span class="icon icon-plus"></span>--%>
+                                    <%--</button>--%>
                                     <%--</div>--%>
                                 </td>
                             </tr>
@@ -95,24 +95,25 @@
                                 <thead>
                                 <tr class="table-header">
                                     <td>Title</td>
-                                    <td>First Name</td>
-                                    <td>Second Name</td>
-                                    <td>Salary</td>
-                                    <td>Date</td>
+                                    <%--<td>First Name</td>--%>
+                                    <%--<td>Second Name</td>--%>
+                                    <%--<td>Salary</td>--%>
+                                    <%--<td>Date</td>--%>
                                     <td class="my-table-cell3">
-                                        <%--<form ng-show="permission.edit=='true'">--%>
-                                            <%--<button ng-click="createEmployee(dep_id)" class="btn btn-default btn-lg">--%>
-                                                <%--<span class="glyphicon glyphicon-plus"></span>--%>
-                                            <%--</button>--%>
-                                        <%--</form>--%>
+
+                                    <button ng-click="createRole(role.id)" class="btn btn-default btn-lg">
+                                        <span class="icon icon-plus"></span>
+                                    </button>
+
                                     </td>
                                     <td class="my-table-cell3">
-                                        <%--</form>--%>
-                                        <%--<form>--%>
-                                            <%--<button ng-click="departmentList()" class="btn btn-default btn-lg">--%>
-                                                <%--<span class="glyphicon glyphicon-th-list"></span>--%>
-                                            <%--</button>--%>
-                                        <%--</form>--%>
+
+
+                                        <button ng-click="usersList()" class="btn btn-default btn-lg">
+                                            <span class="icon icon-list"></span>
+                                        </button>
+
+
                                     </td>
                                 </tr>
                                 </thead>
@@ -120,61 +121,68 @@
 
                                 <tr class="my-table-cell" ng-repeat="role in roles">
                                     <td>
-                                        {{roles.title}}
+                                        {{role.title}}
                                     </td>
 
-                                    <td>
-                                        {{roles.id}}
-                                    </td>
+                                    <%--<td>--%>
+                                    <%--{{role.id}}--%>
+                                    <%--</td>--%>
 
-                                    <td>
-                                        {{roles.second_name}}
-                                    </td>
+                                    <%--<td>--%>
+                                    <%--{{roles.second_name}}--%>
+                                    <%--</td>--%>
 
-                                    <td>
-                                        {{roles.salary}}
-                                    </td>
+                                    <%--<td>--%>
+                                    <%--{{roles.salary}}--%>
+                                    <%--</td>--%>
 
-                                    <td>
-                                        {{roles.date}}
+                                    <%--<td>--%>
+                                    <%--{{roles.date}}--%>
+                                    <%--</td>--%>
+
+                                    <td class="my-table-cell3">
+
+                                        <button ng-click="deleting(role.id)" class="btn btn-default btn-lg">
+                                            <span class="icon icon-remove"></span>
+                                        </button>
+
                                     </td>
 
                                     <td class="my-table-cell3">
-                                        <form ng-show="permission.delete=='true'">
-                                            <button ng-click="deleting(emp.id, dep_id)" class="btn btn-default btn-lg">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </button>
-                                        </form>
-                                    </td>
 
-                                    <td class="my-table-cell3">
-                                        <form ng-show="permission.edit=='true'">
-                                            <button ng-click="editing(emp.id)" class="btn btn-default btn-lg">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </button>
-                                        </form>
+                                        <button ng-click="editing(role.id)" class="btn btn-default btn-lg">
+                                            <span class="icon icon-pencil"></span>
+                                        </button>
+
                                     </td>
 
                                 </tr>
-
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
-                    <div class="col-sm-2">
-                            <button ng-click="usersList()" class="btn btn-default btn-lg">
-                                <span class="icon icon-list"></span>
-                            </button>
-                    </div>
+
                 </div>
             </div>
         </div>
     </script>
 </div>
+
+<portlet:actionURL var="actionURL">
+    <portlet:param name="param_name" value="param_value"/>
+</portlet:actionURL>
+
+<portlet:renderURL var="renderURL">
+    <portlet:param name="param_name" value="param_value"/>
+</portlet:renderURL>
+
+<portlet:resourceURL id="resourseURL" var="resourseURL">
+    <portlet:param name="id" value="id_value"/>
+    <portlet:param name="param2" value="param_value2"/>
+</portlet:resourceURL>
+
 <script>
-    myApp.constant('cfg', {url: '${ajaxURL}'});//TODO RenderUrl with Vetals Lib!!!
-    myApp.constant('pId', {url: '${portletId}'});
+    myApp.constant('cfg', {url: '${ajaxURL}', resourseURL: '${resourseURL}'});//TODO RenderUrl with Vetals Lib!!!
     angular.bootstrap(document.getElementById("p_p_id<portlet:namespace />"), ['myApp']);
 </script>
 </body>

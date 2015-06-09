@@ -14,10 +14,10 @@ myApp.config(['$routeProvider', function ($routeProvider) {
         })
 }]);
 
-myApp.controller("MainController", ['$scope', '$http', '$location', 'pId', function ($scope, $http, $location, pId) {
+myApp.controller("MainController", ['$scope', '$http', '$location', function ($scope, $http, $location) {
 
     $location.path("/usersList");
-    $scope.pId = pId;
+
 
 }]);
 
@@ -59,7 +59,9 @@ myApp.controller("RolesListController", ['$scope', '$http', '$location', '$rootS
 
     $scope.roles = {};
 
-    $http.post(cfg.url + "&p_p_resource_id=getAllRolesById", {id: $rootScope.id})
+    $scope.url = cfg.resourseURL.replace("id_value", $rootScope.id);
+
+    $http.post($scope.url)
         .success(function (data) {
             if (data[0] === 'DataBaseException') {
                 //TODO redirect to error page
@@ -70,7 +72,7 @@ myApp.controller("RolesListController", ['$scope', '$http', '$location', '$rootS
             alert("server is under reconstruction, try later");
         });
 
-    $scope.usersList = function(){
+    $scope.usersList = function () {
         $location.path("/usersList");
     };
 }]);
